@@ -1,0 +1,21 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjfaquino/weather-app.git"
+  },
+  "keywords": [],
+  "author": "Christian Aquino",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cjfaquino/weather-app/issues"
+  },
+  "homepage": "https://github.com/cjfaquino/weather-app#readme"
+}
