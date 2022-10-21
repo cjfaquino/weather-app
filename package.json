@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/cjfaquino/weather-app/issues"
   },
-  "homepage": "https://github.com/cjfaquino/weather-app#readme"
+  "homepage": "https://github.com/cjfaquino/weather-app#readme",
+  "devDependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
 }
