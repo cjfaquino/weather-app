@@ -7,9 +7,9 @@ const getWeather = async (city, state, country, units = "imperial") => {
     );
 
     const data = await res.json();
-    console.log(data);
+    return data;
   } catch (error) {
-    console.log(error);
+    return console.log(error);
   }
 };
 
