@@ -23,23 +23,33 @@ const makeMain = () => {
 
   main.innerHTML = `
   <div class="results hide">
-    <div class="current-temps">
-      <div class="city-name"></div>
-      <div class="current-conditions"></div>
-      <div class="current-temp"></div>
-      <div class="current-hi-lo">
-        <div class="low-temp">L:<span class="low-temp"></span></div>
-        <div class="high-temp">H:<span class="high-temp"></span></div>
-      </div>
-      </div>
-    <div class="three-hourly-temps">
-    </div>
+    <div class="current-temps"></div>
+    <div class="three-hourly-temps"></div>
   </div>
   
   <div class="error hide"></div>
   `;
 
   return main;
+};
+
+const makeCurrentCard = (currentWeather) => {
+  const city = currentWeather.name;
+  const conditions = currentWeather.weather[0].main;
+  const temp = Math.round(currentWeather.main.temp);
+  const hiTemp = Math.round(currentWeather.main.temp_max);
+  const loTemp = Math.round(currentWeather.main.temp_min);
+
+  const currentTemps = document.querySelector(".current-temps");
+  currentTemps.innerHTML = `
+  <div class="city-name">${city}</div>
+      <div class="current-conditions">${conditions}</div>
+      <div class="current-temp">${temp}</div>
+      <div class="current-hi-lo">
+        <div class="low-temp">L:<span class="low-temp">${hiTemp}</span></div>
+        <div class="high-temp">H:<span class="high-temp">${loTemp}</span></div>
+  </div>
+  `;
 };
 
 const makeHourlyCard = (hourlyData) => {
@@ -64,11 +74,6 @@ const makeHourlyCard = (hourlyData) => {
 const setWeather = async (location) => {
   const results = document.querySelector(".results");
   const error = document.querySelector(".error");
-  const cityName = results.querySelector(".city-name");
-  const currentConditions = results.querySelector(".current-conditions");
-  const currentTemp = results.querySelector(".current-temp");
-  const currentHigh = results.querySelector("span.high-temp");
-  const currentLow = results.querySelector("span.low-temp");
 
   const data = await getWeather(location);
   const currentWeather = data.weather;
@@ -78,11 +83,7 @@ const setWeather = async (location) => {
     results.classList.remove("hide");
 
     // current conditons
-    cityName.textContent = currentWeather.name;
-    currentConditions.textContent = currentWeather.weather[0].main;
-    currentTemp.textContent = Math.round(currentWeather.main.temp);
-    currentHigh.textContent = Math.round(currentWeather.main.temp_max);
-    currentLow.textContent = Math.round(currentWeather.main.temp_min);
+    makeCurrentCard(currentWeather);
 
     // every 3rd hour conditions
     for (let i = 0; i < 5; i++) {
