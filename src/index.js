@@ -33,6 +33,8 @@ const makeMain = () => {
         </div>
       </div>
     </div>
+  
+  <div class="error hide"></div>
   `;
 
   return main;
@@ -40,6 +42,7 @@ const makeMain = () => {
 
 const setWeather = async (location) => {
   const results = document.querySelector(".results");
+  const error = document.querySelector(".error");
   const cityName = results.querySelector(".city-name");
   const conditions = results.querySelector(".conditions");
   const currentTemp = results.querySelector(".current-temp");
@@ -55,7 +58,10 @@ const setWeather = async (location) => {
     currentTemp.textContent = weatherData.main.temp;
     currentHigh.textContent = weatherData.main.temp_max;
     currentLow.textContent = weatherData.main.temp_min;
-  } else console.log(weatherData);
+  } else {
+    error.classList.remove("hide");
+    error.textContent = weatherData.message;
+  }
 };
 
 document.body.append(makeHeader(), makeMain());
@@ -63,9 +69,11 @@ document.body.append(makeHeader(), makeMain());
 const form = document.querySelector("form");
 const search = document.getElementById("search");
 const results = document.querySelector(".results");
+const error = document.querySelector(".error");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   results.classList.add("hide");
+  error.classList.add("hide");
   setWeather(search.value);
 });
