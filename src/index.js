@@ -1,4 +1,5 @@
 import getWeather from "./components/openWeather";
+import "./style.css";
 
 const makeHeader = () => {
   const header = document.createElement("header");
