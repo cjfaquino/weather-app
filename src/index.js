@@ -31,6 +31,8 @@ const makeMain = () => {
         <div class="low-temp">L:<span class="low-temp"></span></div>
         <div class="high-temp">H:<span class="high-temp"></span></div>
       </div>
+      </div>
+    <div class="three-hourly-temps">
     </div>
   </div>
   
@@ -38,6 +40,25 @@ const makeMain = () => {
   `;
 
   return main;
+};
+
+const makeHourlyCard = (hourlyData) => {
+  const time = hourlyData.dt_txt.split(" ")[1].split(":")[0];
+  const conditions = hourlyData.weather[0].main;
+  const temp = Math.round(hourlyData.main.temp);
+
+  const threeHourly = document.querySelector(".three-hourly-temps");
+  const card = document.createElement("div");
+
+  card.classList.add("card-3hourly");
+  card.innerHTML = `
+  <div class="3hourly-time">${time}</div>
+  <div class="3hourly-conditions">${conditions}</div>
+  <div class="3hourly-temp">${temp}</div>
+  `;
+
+  threeHourly.append(card);
+  return card;
 };
 
 const setWeather = async (location) => {
@@ -51,17 +72,26 @@ const setWeather = async (location) => {
 
   const data = await getWeather(location);
   const currentWeather = data.weather;
+  const hourlyWeather = data.hourly;
 
-  if (currentWeather.cod === 200) {
+  if (currentWeather.cod === 200 && data.hourly.cod === "200") {
     results.classList.remove("hide");
+
+    // current conditons
     cityName.textContent = currentWeather.name;
     currentConditions.textContent = currentWeather.weather[0].main;
     currentTemp.textContent = Math.round(currentWeather.main.temp);
     currentHigh.textContent = Math.round(currentWeather.main.temp_max);
     currentLow.textContent = Math.round(currentWeather.main.temp_min);
+
+    // every 3rd hour conditions
+    for (let i = 0; i < 5; i++) {
+      const element = hourlyWeather.list[i];
+      makeHourlyCard(element);
+    }
   } else {
     error.classList.remove("hide");
-    error.textContent = currentWeather.message;
+    error.textContent = currentWeather.message || hourlyWeather.message;
   }
 };
 
