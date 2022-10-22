@@ -22,7 +22,7 @@ const makeMain = () => {
   const main = document.createElement("main");
 
   main.innerHTML = `
-  <div class="results">
+  <div class="results hide">
       <div class="current-temps">
         <div class="city-name"></div>
         <div class="conditions"></div>
@@ -49,6 +49,7 @@ const setWeather = async (location) => {
   const weatherData = await getWeather(location);
 
   if (weatherData.cod === 200) {
+    results.classList.remove("hide");
     cityName.textContent = weatherData.name;
     conditions.textContent = weatherData.weather[0].main;
     currentTemp.textContent = weatherData.main.temp;
@@ -61,8 +62,10 @@ document.body.append(makeHeader(), makeMain());
 
 const form = document.querySelector("form");
 const search = document.getElementById("search");
+const results = document.querySelector(".results");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  results.classList.add("hide");
   setWeather(search.value);
 });
