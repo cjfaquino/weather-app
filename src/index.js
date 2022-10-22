@@ -55,9 +55,9 @@ const setWeather = async (location) => {
     results.classList.remove("hide");
     cityName.textContent = weatherData.name;
     conditions.textContent = weatherData.weather[0].main;
-    currentTemp.textContent = weatherData.main.temp;
-    currentHigh.textContent = weatherData.main.temp_max;
-    currentLow.textContent = weatherData.main.temp_min;
+    currentTemp.textContent = Math.round(weatherData.main.temp);
+    currentHigh.textContent = Math.round(weatherData.main.temp_max);
+    currentLow.textContent = Math.round(weatherData.main.temp_min);
   } else {
     error.classList.remove("hide");
     error.textContent = weatherData.message;
