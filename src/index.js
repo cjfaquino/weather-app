@@ -45,10 +45,10 @@ const makeCurrentCard = (currentWeather) => {
   currentTemps.innerHTML = `
   <div class="city-name">${city}</div>
       <div class="current-conditions">${conditions}</div>
-      <div class="current-temp">${temp}</div>
+      <div class="current-temp">${temp}°</div>
       <div class="current-hi-lo">
-        <div class="low-temp">L:<span class="low-temp">${hiTemp}</span></div>
-        <div class="high-temp">H:<span class="high-temp">${loTemp}</span></div>
+        <div class="low-temp">L:<span class="low-temp">${hiTemp}°</span></div>
+        <div class="high-temp">H:<span class="high-temp">${loTemp}°</span></div>
   </div>
   `;
 };
@@ -89,7 +89,7 @@ const makeOtherCard = (currentWeather) => {
 
   const other = document.querySelector(".other");
   other.innerHTML = `
-  <div class="feels-like">Feels like <span>${roundedFeels}</span></div>
+  <div class="feels-like">Feels like <span>${roundedFeels}°</span></div>
   <div class="humidity">Humidity <span>${humidity}%</span></div>
   <div class="cloudiness">Cloudiness <span>${cloudiness}%</span></div>
   <div class="pressure">Pressure <span>${pressure} hPa</span></div>
@@ -113,7 +113,7 @@ const makeHourlyCard = (hourlyData) => {
   card.innerHTML = `
   <div class="3hourly-time">${time}</div>
   <div class="3hourly-conditions">${conditions}</div>
-  <div class="3hourly-temp">${temp}</div>
+  <div class="3hourly-temp">${temp}°</div>
   `;
 
   threeHourly.append(card);
