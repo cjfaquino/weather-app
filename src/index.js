@@ -24,6 +24,7 @@ const makeMain = () => {
   main.innerHTML = `
   <div class="results hide">
     <div class="current-temps"></div>
+    <div class="other"></div>
     <div class="three-hourly-temps"></div>
   </div>
   
@@ -48,6 +49,54 @@ const makeCurrentCard = (currentWeather) => {
       <div class="current-hi-lo">
         <div class="low-temp">L:<span class="low-temp">${hiTemp}</span></div>
         <div class="high-temp">H:<span class="high-temp">${loTemp}</span></div>
+  </div>
+  `;
+};
+
+const getTime = (timeInSec) => {
+  Date.prototype.stdTimezoneOffset = function () {
+    const jan = new Date(this.getFullYear(), 0, 1);
+    const jul = new Date(this.getFullYear(), 6, 1);
+    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+  };
+
+  Date.prototype.isDstObserved = function () {
+    return this.getTimezoneOffset() < this.stdTimezoneOffset();
+  };
+
+  let time = timeInSec;
+  const today = new Date();
+  if (today.isDstObserved()) {
+    time += 3600;
+  }
+  const item = new Date(0);
+  item.setSeconds(time);
+  const timeString = item.toLocaleTimeString();
+  return timeString;
+};
+
+const makeOtherCard = (currentWeather) => {
+  const {
+    wind: { speed },
+    main: { pressure, humidity, feels_like: feelsLike },
+    clouds: { all: cloudiness },
+    sys: { sunrise, sunset },
+  } = currentWeather;
+
+  const roundedFeels = Math.round(feelsLike);
+  const sunriseTime = getTime(sunrise);
+  const sunsetTime = getTime(sunset);
+
+  const other = document.querySelector(".other");
+  other.innerHTML = `
+  <div class="feels-like">Feels like <span>${roundedFeels}</span></div>
+  <div class="humidity">Humidity <span>${humidity}%</span></div>
+  <div class="cloudiness">Cloudiness <span>${cloudiness}%</span></div>
+  <div class="pressure">Pressure <span>${pressure} hPa</span></div>
+  <div class="speed">Wind speed <span>${speed} mph</span></div>
+  <div class="rise-set">
+    <div class="sunrise">Sunrise <span>${sunriseTime}</span></div>
+    <div class="sunset">Sunset <span>${sunsetTime}</span></div>
   </div>
   `;
 };
@@ -78,12 +127,16 @@ const setWeather = async (location) => {
   const data = await getWeather(location);
   const currentWeather = data.weather;
   const hourlyWeather = data.hourly;
+  console.log(data);
 
   if (currentWeather.cod === 200 && data.hourly.cod === "200") {
     results.classList.remove("hide");
 
     // current conditons
     makeCurrentCard(currentWeather);
+
+    // other data
+    makeOtherCard(currentWeather);
 
     // every 3rd hour conditions
     for (let i = 0; i < 5; i++) {
@@ -110,4 +163,4 @@ form.addEventListener("submit", (e) => {
   setWeather(search.value);
 });
 
-setWeather("london");
+setWeather("baldwin park", "ca");
