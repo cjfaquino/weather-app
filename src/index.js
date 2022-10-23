@@ -65,7 +65,7 @@ const makeCurrentCard = (name, state, current, daily, timezone) => {
   const {
     temp,
     dt: time,
-    weather: [{ main: condition }],
+    weather: [{ main: condition, icon, description }],
   } = current;
 
   const [
@@ -80,11 +80,12 @@ const makeCurrentCard = (name, state, current, daily, timezone) => {
   currentTemps.innerHTML = `
   <div class="city-name">${name}, ${state}</div>
   <div class="current-time">Currently ${currentTime}</div>
-      <div class="current-conditions">${condition}</div>
-      <div class="current-temp">${temp}°</div>
-      <div class="current-hi-lo">
-        <div class="low-temp">L:<span class="low-temp">${min}°</span></div>
-        <div class="high-temp">H:<span class="high-temp">${max}°</span></div>
+  <div class="current-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
+  <div class="current-conditions">${condition}</div>
+  <div class="current-temp">${temp}°</div>
+  <div class="current-hi-lo">
+    <div class="low-temp">L:<span class="low-temp">${min}°</span></div>
+    <div class="high-temp">H:<span class="high-temp">${max}°</span></div>
   </div>
   `;
 };
@@ -128,7 +129,7 @@ const makeHourlyCard = (hourly, timezone) => {
     pop,
     temp,
     dt: time,
-    weather: [{ main: condition }],
+    weather: [{ icon, description }],
   } = hourly;
 
   const newTime = getTime(time, timezone);
@@ -144,7 +145,7 @@ const makeHourlyCard = (hourly, timezone) => {
   card.innerHTML = `
   <div class="hourly-time">${hour}<span class="period">${period}</span></div>
   <div class="hourly-rain">${rainPerc}%</div>
-  <div class="hourly-conditions">${condition}</div>
+  <div class="hourly-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
   <div class="hourly-temp">${temp}°</div>
   `;
 
@@ -154,6 +155,7 @@ const makeHourlyCard = (hourly, timezone) => {
 
 const makeDailyCard = (daily) => {
   const {
+    weather: [{ icon, description }],
     temp: { min, max },
     dt: time,
     humidity,
@@ -167,12 +169,11 @@ const makeDailyCard = (daily) => {
 
   card.classList.add("card-hourly");
   card.innerHTML = `
-  <div class="day">
-    <div class="weekday">${day}</div>
-    <div class="daily-temp"><span class="daily-hi">${max}</span> <span class="daily-lo">${min}</span></div>
-    <div class="daily-rain">${rainPerc}%</div>
-    <div class="daily-humidity">${humidity}%</div>
-  </div>
+  <div class="weekday">${day}</div>
+  <div class="daily-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
+  <div class="daily-temp"><span class="daily-hi">${max}</span> <span class="daily-lo">${min}</span></div>
+  <div class="daily-rain">${rainPerc}%</div>
+  <div class="daily-humidity">${humidity}%</div>
   `;
 
   dailyTemps.append(card);
