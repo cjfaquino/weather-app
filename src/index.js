@@ -62,21 +62,29 @@ const getDay = (unixTime, timezone) => {
 };
 
 const makeCurrentCard = (name, state, current, daily, timezone) => {
-  const conditions = current.weather[0].main;
-  const temp = Math.round(current.temp);
-  const hiTemp = Math.round(daily[0].temp.max);
-  const loTemp = Math.round(daily[0].temp.min);
-  const currentTime = getTime(current.dt, timezone);
+  const {
+    temp,
+    dt: time,
+    weather: [{ main: condition }],
+  } = current;
+
+  const [
+    {
+      temp: { min, max },
+    },
+  ] = daily;
+
+  const currentTime = getTime(time, timezone);
 
   const currentTemps = document.querySelector(".current-temps");
   currentTemps.innerHTML = `
   <div class="city-name">${name}, ${state}</div>
   <div class="current-time">Currently ${currentTime}</div>
-      <div class="current-conditions">${conditions}</div>
+      <div class="current-conditions">${condition}</div>
       <div class="current-temp">${temp}°</div>
       <div class="current-hi-lo">
-        <div class="low-temp">L:<span class="low-temp">${hiTemp}°</span></div>
-        <div class="high-temp">H:<span class="high-temp">${loTemp}°</span></div>
+        <div class="low-temp">L:<span class="low-temp">${min}°</span></div>
+        <div class="high-temp">H:<span class="high-temp">${max}°</span></div>
   </div>
   `;
 };
@@ -93,15 +101,15 @@ const makeOtherCard = (current, timezone) => {
     sunset,
     uvi,
   } = current;
+
   const miVisibility = (visibility / 1609).toFixed(2);
   const hgPressure = (pressure * 0.029529983071445).toFixed(2);
-  const roundedFeels = Math.round(feelsLike);
   const sunriseTime = getTime(sunrise, timezone);
   const sunsetTime = getTime(sunset, timezone);
 
   const other = document.querySelector(".other");
   other.innerHTML = `
-  <div class="feels-like">Feels like <span>${roundedFeels}°</span></div>
+  <div class="feels-like">Feels like <span>${feelsLike}°</span></div>
   <div class="humidity">Humidity <span>${humidity}%</span></div>
   <div class="uvi">UV Index <span>${uvi}</span></div>
   <div class="cloudiness">Cloudiness <span>${cloudiness}%</span></div>
@@ -116,21 +124,27 @@ const makeOtherCard = (current, timezone) => {
 };
 
 const makeHourlyCard = (hourly, timezone) => {
-  const pop = hourly.pop;
-  const conditions = hourly.weather[0].main;
-  const temp = Math.round(hourly.temp);
-  const time = getTime(hourly.dt, timezone);
-  const splitTime = time.split(" ");
+  const {
+    pop,
+    temp,
+    dt: time,
+    weather: [{ main: condition }],
+  } = hourly;
+
+  const newTime = getTime(time, timezone);
+  const splitTime = newTime.split(" ");
   const hour = splitTime[0].split(":")[0];
+  const period = splitTime[1];
   const rainPerc = pop * 100;
+
   const hourlyTemps = document.querySelector(".hourly-temps");
   const card = document.createElement("div");
 
   card.classList.add("card-hourly");
   card.innerHTML = `
-  <div class="hourly-time">${hour}<span class="period">${splitTime[1]}</span></div>
+  <div class="hourly-time">${hour}<span class="period">${period}</span></div>
   <div class="hourly-rain">${rainPerc}%</div>
-  <div class="hourly-conditions">${conditions}</div>
+  <div class="hourly-conditions">${condition}</div>
   <div class="hourly-temp">${temp}°</div>
   `;
 
@@ -145,9 +159,8 @@ const makeDailyCard = (daily) => {
     humidity,
     pop,
   } = daily;
+
   const rainPerc = pop * 100;
-  const dayHi = Math.round(max);
-  const dayLo = Math.round(min);
   const day = getDay(time);
   const dailyTemps = document.querySelector(".daily-temps");
   const card = document.createElement("div");
@@ -156,7 +169,7 @@ const makeDailyCard = (daily) => {
   card.innerHTML = `
   <div class="day">
     <div class="weekday">${day}</div>
-    <div class="daily-temp"><span class="daily-hi">${dayHi}</span> <span class="daily-lo">${dayLo}</span></div>
+    <div class="daily-temp"><span class="daily-hi">${max}</span> <span class="daily-lo">${min}</span></div>
     <div class="daily-rain">${rainPerc}%</div>
     <div class="daily-humidity">${humidity}%</div>
   </div>
