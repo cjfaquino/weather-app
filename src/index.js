@@ -26,6 +26,7 @@ const makeMain = () => {
     <div class="current-temps"></div>
     <div class="other"></div>
     <div class="hourly-temps"></div>
+    <div class="daily-temps"></div>
   </div>
   
   <div class="error hide"></div>
@@ -126,6 +127,32 @@ const makeHourlyCard = (hourly, timezone) => {
   return card;
 };
 
+const makeDailyCard = (daily) => {
+  const {
+    temp: { min, max },
+    humidity,
+    pop,
+  } = daily;
+  const rainPerc = pop * 100;
+  const dayHi = Math.round(max);
+  const dayLo = Math.round(min);
+
+  const dailyTemps = document.querySelector(".daily-temps");
+  const card = document.createElement("div");
+
+  card.classList.add("card-hourly");
+  card.innerHTML = `
+  <div class="day">
+    <div class="name"></div>
+    <div class="daily-temp"><span class="daily-hi">${dayHi}</span> <span class="daily-lo">${dayLo}</span></div>
+    <div class="daily-rain">${rainPerc}%</div>
+    <div class="daily-humidity">${humidity}%</div>
+  </div>
+  `;
+
+  dailyTemps.append(card);
+};
+
 const setWeather = async (location) => {
   const results = document.querySelector(".results");
   const hourlyTemps = document.querySelector(".hourly-temps");
@@ -150,6 +177,12 @@ const setWeather = async (location) => {
       const element = hourly[i];
       makeHourlyCard(element, timezone);
     }
+
+    // daily conditions
+    daily.forEach((day) => {
+      makeDailyCard(day);
+      console.log(day);
+    });
   } else {
     error.classList.remove("hide");
     error.textContent = weather.message;
