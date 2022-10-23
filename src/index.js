@@ -34,24 +34,6 @@ const makeMain = () => {
   return main;
 };
 
-const makeCurrentCard = (name, state, current, daily) => {
-  const conditions = current.weather[0].main;
-  const temp = Math.round(current.temp);
-  const hiTemp = Math.round(daily[0].temp.max);
-  const loTemp = Math.round(daily[0].temp.min);
-
-  const currentTemps = document.querySelector(".current-temps");
-  currentTemps.innerHTML = `
-  <div class="city-name">${name}, ${state}</div>
-      <div class="current-conditions">${conditions}</div>
-      <div class="current-temp">${temp}°</div>
-      <div class="current-hi-lo">
-        <div class="low-temp">L:<span class="low-temp">${hiTemp}°</span></div>
-        <div class="high-temp">H:<span class="high-temp">${loTemp}°</span></div>
-  </div>
-  `;
-};
-
 const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
@@ -63,9 +45,30 @@ const getTime = (unixTime, timezone) => {
   const date = new Date(msTime);
   const timeString = new Date(date).toLocaleTimeString("en-US", {
     timeZone: timezone,
+    timeStyle: "short",
   });
 
   return timeString;
+};
+
+const makeCurrentCard = (name, state, current, daily, timezone) => {
+  const conditions = current.weather[0].main;
+  const temp = Math.round(current.temp);
+  const hiTemp = Math.round(daily[0].temp.max);
+  const loTemp = Math.round(daily[0].temp.min);
+  const currentTime = getTime(current.dt, timezone);
+
+  const currentTemps = document.querySelector(".current-temps");
+  currentTemps.innerHTML = `
+  <div class="city-name">${name}, ${state}</div>
+  <div class="current-time">Currently ${currentTime}</div>
+      <div class="current-conditions">${conditions}</div>
+      <div class="current-temp">${temp}°</div>
+      <div class="current-hi-lo">
+        <div class="low-temp">L:<span class="low-temp">${hiTemp}°</span></div>
+        <div class="high-temp">H:<span class="high-temp">${loTemp}°</span></div>
+  </div>
+  `;
 };
 
 const makeOtherCard = (current, timezone) => {
@@ -136,7 +139,7 @@ const setWeather = async (location) => {
     results.classList.remove("hide");
 
     // current conditons
-    makeCurrentCard(name, state, current, daily);
+    makeCurrentCard(name, state, current, daily, timezone);
 
     // other data
     makeOtherCard(current, timezone);
