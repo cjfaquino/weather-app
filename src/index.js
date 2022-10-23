@@ -43,8 +43,7 @@ const removeAllChildNodes = (parent) => {
 
 const getTime = (unixTime, timezone) => {
   const msTime = unixTime * 1000;
-  const date = new Date(msTime);
-  const timeString = new Date(date).toLocaleTimeString("en-US", {
+  const timeString = new Date(msTime).toLocaleTimeString("en-US", {
     timeZone: timezone,
     timeStyle: "short",
   });
