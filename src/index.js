@@ -116,18 +116,20 @@ const makeOtherCard = (current, timezone) => {
 };
 
 const makeHourlyCard = (hourly, timezone) => {
+  const pop = hourly.pop;
   const conditions = hourly.weather[0].main;
   const temp = Math.round(hourly.temp);
   const time = getTime(hourly.dt, timezone);
   const splitTime = time.split(" ");
   const hour = splitTime[0].split(":")[0];
-
+  const rainPerc = pop * 100;
   const hourlyTemps = document.querySelector(".hourly-temps");
   const card = document.createElement("div");
 
   card.classList.add("card-hourly");
   card.innerHTML = `
   <div class="hourly-time">${hour}<span class="period">${splitTime[1]}</span></div>
+  <div class="hourly-rain">${rainPerc}%</div>
   <div class="hourly-conditions">${conditions}</div>
   <div class="hourly-temp">${temp}°</div>
   `;
