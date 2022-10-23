@@ -61,6 +61,13 @@ const getDay = (unixTime, timezone) => {
   return dayString;
 };
 
+const roundTemps = () => {
+  const numberTemps = document.querySelectorAll(".number-temp");
+  numberTemps.forEach((temp) => {
+    temp.textContent = Math.round(temp.textContent);
+  });
+};
+
 const makeCurrentCard = (name, state, current, daily, timezone) => {
   const {
     temp,
@@ -82,10 +89,10 @@ const makeCurrentCard = (name, state, current, daily, timezone) => {
   <div class="current-time">Currently ${currentTime}</div>
   <div class="current-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
   <div class="current-conditions">${condition}</div>
-  <div class="current-temp">${temp}°</div>
+  <div class="current-temp"><span class="number-temp">${temp}</span>°</div>
   <div class="current-hi-lo">
-    <div class="low-temp">L:<span class="low-temp">${min}°</span></div>
-    <div class="high-temp">H:<span class="high-temp">${max}°</span></div>
+    <div class="low-temp">L:<span class="low-temp"><span class="number-temp">${min}</span>°</span></div>
+    <div class="high-temp">H:<span class="high-temp"><span class="number-temp">${max}</span>°</span></div>
   </div>
   `;
 };
@@ -110,7 +117,7 @@ const makeOtherCard = (current, timezone) => {
 
   const other = document.querySelector(".other");
   other.innerHTML = `
-  <div class="feels-like">Feels like <span>${feelsLike}°</span></div>
+  <div class="feels-like">Feels like <span><span class="number-temp">${feelsLike}</span>°</span></div>
   <div class="humidity">Humidity <span>${humidity}%</span></div>
   <div class="uvi">UV Index <span>${uvi}</span></div>
   <div class="cloudiness">Cloudiness <span>${cloudiness}%</span></div>
@@ -146,7 +153,7 @@ const makeHourlyCard = (hourly, timezone) => {
   <div class="hourly-time">${hour}<span class="period">${period}</span></div>
   <div class="hourly-rain">${rainPerc}%</div>
   <div class="hourly-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
-  <div class="hourly-temp">${temp}°</div>
+  <div class="hourly-temp"><span class="number-temp">${temp}</span>°</div>
   `;
 
   hourlyTemps.append(card);
@@ -171,7 +178,7 @@ const makeDailyCard = (daily) => {
   card.innerHTML = `
   <div class="weekday">${day}</div>
   <div class="daily-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
-  <div class="daily-temp"><span class="daily-hi">${max}</span> <span class="daily-lo">${min}</span></div>
+  <div class="daily-temp"><span class="daily-hi"><span class="number-temp">${max}</span>°</span> <span class="daily-lo"><span     class="number-temp">${min}</span>°</span></div>
   <div class="daily-rain">${rainPerc}%</div>
   <div class="daily-humidity">${humidity}%</div>
   `;
@@ -210,6 +217,8 @@ const setWeather = async (location) => {
     daily.forEach((day) => {
       makeDailyCard(day, timezone);
     });
+
+    roundTemps();
   } else {
     error.classList.remove("hide");
     error.textContent = weather.message;
