@@ -84,6 +84,7 @@ const makeOtherCard = (current, timezone) => {
     uvi,
   } = current;
   const miVisibility = (visibility / 1609).toFixed(2);
+  const hgPressure = (pressure * 0.029529983071445).toFixed(2);
   const roundedFeels = Math.round(feelsLike);
   const sunriseTime = getTime(sunrise, timezone);
   const sunsetTime = getTime(sunset, timezone);
@@ -95,7 +96,7 @@ const makeOtherCard = (current, timezone) => {
   <div class="uvi">UV Index <span>${uvi}</span></div>
   <div class="cloudiness">Cloudiness <span>${cloudiness}%</span></div>
   <div class="cloudiness">Visibility <span>${miVisibility}</span><span class="distance">mi</span></div>
-  <div class="pressure">Pressure <span>${pressure} hPa</span></div>
+  <div class="pressure">Pressure <span>${hgPressure} inHg</span></div>
   <div class="speed">Wind speed <span>${speed} mph</span></div>
   <div class="rise-set">
     <div class="sunrise">Sunrise <span>${sunriseTime}</span></div>
