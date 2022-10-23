@@ -11,6 +11,10 @@
   },
   "rules": {
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
-    "no-extend-native": ["error", { "exceptions": ["Date"] }]
+    "no-extend-native": ["error", { "exceptions": ["Date"] }],
+    "no-param-reassign": [
+      "error",
+      { "props": true, "ignorePropertyModificationsFor": ["temp"] }
+    ]
   }
 }
