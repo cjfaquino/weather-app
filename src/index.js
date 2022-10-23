@@ -52,6 +52,16 @@ const getTime = (unixTime, timezone) => {
   return timeString;
 };
 
+const getDay = (unixTime, timezone) => {
+  const msTime = unixTime * 1000;
+  const dayString = new Date(msTime).toLocaleString("en-US", {
+    timeZone: timezone,
+    weekday: "long",
+  });
+
+  return dayString;
+};
+
 const makeCurrentCard = (name, state, current, daily, timezone) => {
   const conditions = current.weather[0].main;
   const temp = Math.round(current.temp);
@@ -130,20 +140,21 @@ const makeHourlyCard = (hourly, timezone) => {
 const makeDailyCard = (daily) => {
   const {
     temp: { min, max },
+    dt: time,
     humidity,
     pop,
   } = daily;
   const rainPerc = pop * 100;
   const dayHi = Math.round(max);
   const dayLo = Math.round(min);
-
+  const day = getDay(time);
   const dailyTemps = document.querySelector(".daily-temps");
   const card = document.createElement("div");
 
   card.classList.add("card-hourly");
   card.innerHTML = `
   <div class="day">
-    <div class="name"></div>
+    <div class="weekday">${day}</div>
     <div class="daily-temp"><span class="daily-hi">${dayHi}</span> <span class="daily-lo">${dayLo}</span></div>
     <div class="daily-rain">${rainPerc}%</div>
     <div class="daily-humidity">${humidity}%</div>
@@ -180,8 +191,7 @@ const setWeather = async (location) => {
 
     // daily conditions
     daily.forEach((day) => {
-      makeDailyCard(day);
-      console.log(day);
+      makeDailyCard(day, timezone);
     });
   } else {
     error.classList.remove("hide");
