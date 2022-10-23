@@ -166,11 +166,13 @@ const makeDailyCard = (daily) => {
 const setWeather = async (location) => {
   const results = document.querySelector(".results");
   const hourlyTemps = document.querySelector(".hourly-temps");
+  const dailyTemps = document.querySelector(".daily-temps");
   const error = document.querySelector(".error");
 
   const weather = await getWeather(location);
 
   removeAllChildNodes(hourlyTemps);
+  removeAllChildNodes(dailyTemps);
 
   if (!weather.message) {
     const { name, state, current, daily, hourly, timezone } = weather;
