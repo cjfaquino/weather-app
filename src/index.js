@@ -25,7 +25,7 @@ const makeMain = () => {
   <div class="results hide">
     <div class="current-temps"></div>
     <div class="other"></div>
-    <div class="three-hourly-temps"></div>
+    <div class="hourly-temps"></div>
   </div>
   
   <div class="error hide"></div>
@@ -112,28 +112,28 @@ const makeHourlyCard = (hourly, timezone) => {
   const splitTime = time.split(" ");
   const hour = splitTime[0].split(":")[0];
 
-  const threeHourly = document.querySelector(".three-hourly-temps");
+  const hourlyTemps = document.querySelector(".hourly-temps");
   const card = document.createElement("div");
 
-  card.classList.add("card-3hourly");
+  card.classList.add("card-hourly");
   card.innerHTML = `
-  <div class="3hourly-time">${hour}<span class="period">${splitTime[1]}</span></div>
-  <div class="3hourly-conditions">${conditions}</div>
-  <div class="3hourly-temp">${temp}°</div>
+  <div class="hourly-time">${hour}<span class="period">${splitTime[1]}</span></div>
+  <div class="hourly-conditions">${conditions}</div>
+  <div class="hourly-temp">${temp}°</div>
   `;
 
-  threeHourly.append(card);
+  hourlyTemps.append(card);
   return card;
 };
 
 const setWeather = async (location) => {
   const results = document.querySelector(".results");
-  const hourlyDiv = document.querySelector(".three-hourly-temps");
+  const hourlyTemps = document.querySelector(".hourly-temps");
   const error = document.querySelector(".error");
 
   const weather = await getWeather(location);
 
-  removeAllChildNodes(hourlyDiv);
+  removeAllChildNodes(hourlyTemps);
 
   if (!weather.message) {
     const { name, state, current, daily, hourly, timezone } = weather;
@@ -145,7 +145,7 @@ const setWeather = async (location) => {
     // other data
     makeOtherCard(current, timezone);
 
-    // every 3rd hour conditions
+    // hourly conditions
     for (let i = 0; i < 24; i++) {
       const element = hourly[i];
       makeHourlyCard(element, timezone);
