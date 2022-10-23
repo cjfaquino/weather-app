@@ -34,16 +34,15 @@ const makeMain = () => {
   return main;
 };
 
-const makeCurrentCard = (currentWeather) => {
-  const city = currentWeather.name;
-  const conditions = currentWeather.weather[0].main;
-  const temp = Math.round(currentWeather.main.temp);
-  const hiTemp = Math.round(currentWeather.main.temp_max);
-  const loTemp = Math.round(currentWeather.main.temp_min);
+const makeCurrentCard = (name, state, current, daily) => {
+  const conditions = current.weather[0].main;
+  const temp = Math.round(current.temp);
+  const hiTemp = Math.round(daily[0].temp.max);
+  const loTemp = Math.round(daily[0].temp.min);
 
   const currentTemps = document.querySelector(".current-temps");
   currentTemps.innerHTML = `
-  <div class="city-name">${city}</div>
+  <div class="city-name">${name}, ${state}</div>
       <div class="current-conditions">${conditions}</div>
       <div class="current-temp">${temp}°</div>
       <div class="current-hi-lo">
@@ -53,45 +52,40 @@ const makeCurrentCard = (currentWeather) => {
   `;
 };
 
-const getTime = (timeInSec) => {
-  Date.prototype.stdTimezoneOffset = function () {
-    const jan = new Date(this.getFullYear(), 0, 1);
-    const jul = new Date(this.getFullYear(), 6, 1);
-    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-  };
+const getTime = (unixTime, timezone) => {
+  const msTime = unixTime * 1000;
+  const date = new Date(msTime);
+  const timeString = new Date(date).toLocaleTimeString("en-US", {
+    timeZone: timezone,
+  });
 
-  Date.prototype.isDstObserved = function () {
-    return this.getTimezoneOffset() < this.stdTimezoneOffset();
-  };
-
-  let time = timeInSec;
-  const today = new Date();
-  if (today.isDstObserved()) {
-    time += 3600;
-  }
-  const item = new Date(0);
-  item.setSeconds(time);
-  const timeString = item.toLocaleTimeString();
   return timeString;
 };
 
-const makeOtherCard = (currentWeather) => {
+const makeOtherCard = (current, timezone) => {
   const {
-    wind: { speed },
-    main: { pressure, humidity, feels_like: feelsLike },
-    clouds: { all: cloudiness },
-    sys: { sunrise, sunset },
-  } = currentWeather;
-
+    wind_speed: speed,
+    feels_like: feelsLike,
+    clouds: cloudiness,
+    visibility,
+    pressure,
+    humidity,
+    sunrise,
+    sunset,
+    uvi,
+  } = current;
+  const miVisibility = (visibility / 1609).toFixed(2);
   const roundedFeels = Math.round(feelsLike);
-  const sunriseTime = getTime(sunrise);
-  const sunsetTime = getTime(sunset);
+  const sunriseTime = getTime(sunrise, timezone);
+  const sunsetTime = getTime(sunset, timezone);
 
   const other = document.querySelector(".other");
   other.innerHTML = `
   <div class="feels-like">Feels like <span>${roundedFeels}°</span></div>
   <div class="humidity">Humidity <span>${humidity}%</span></div>
+  <div class="uvi">UV Index <span>${uvi}</span></div>
   <div class="cloudiness">Cloudiness <span>${cloudiness}%</span></div>
+  <div class="cloudiness">Visibility <span>${miVisibility}</span><span class="distance">mi</span></div>
   <div class="pressure">Pressure <span>${pressure} hPa</span></div>
   <div class="speed">Wind speed <span>${speed} mph</span></div>
   <div class="rise-set">
@@ -101,17 +95,19 @@ const makeOtherCard = (currentWeather) => {
   `;
 };
 
-const makeHourlyCard = (hourlyData) => {
-  const time = hourlyData.dt_txt.split(" ")[1].split(":")[0];
-  const conditions = hourlyData.weather[0].main;
-  const temp = Math.round(hourlyData.main.temp);
+const makeHourlyCard = (hourly, timezone) => {
+  const conditions = hourly.weather[0].main;
+  const temp = Math.round(hourly.temp);
+  const time = getTime(hourly.dt, timezone);
+  const splitTime = time.split(" ");
+  const hour = splitTime[0].split(":")[0];
 
   const threeHourly = document.querySelector(".three-hourly-temps");
   const card = document.createElement("div");
 
   card.classList.add("card-3hourly");
   card.innerHTML = `
-  <div class="3hourly-time">${time}</div>
+  <div class="3hourly-time">${hour}<span class="period">${splitTime[1]}</span></div>
   <div class="3hourly-conditions">${conditions}</div>
   <div class="3hourly-temp">${temp}°</div>
   `;
@@ -124,28 +120,26 @@ const setWeather = async (location) => {
   const results = document.querySelector(".results");
   const error = document.querySelector(".error");
 
-  const data = await getWeather(location);
-  const currentWeather = data.weather;
-  const hourlyWeather = data.hourly;
-  console.log(data);
+  const weather = await getWeather(location);
 
-  if (currentWeather.cod === 200 && data.hourly.cod === "200") {
+  if (!weather.message) {
+    const { name, state, current, daily, hourly, timezone } = weather;
     results.classList.remove("hide");
 
     // current conditons
-    makeCurrentCard(currentWeather);
+    makeCurrentCard(name, state, current, daily);
 
     // other data
-    makeOtherCard(currentWeather);
+    makeOtherCard(current, timezone);
 
     // every 3rd hour conditions
-    for (let i = 0; i < 5; i++) {
-      const element = hourlyWeather.list[i];
-      makeHourlyCard(element);
+    for (let i = 0; i < 24; i++) {
+      const element = hourly[i];
+      makeHourlyCard(element, timezone);
     }
   } else {
     error.classList.remove("hide");
-    error.textContent = currentWeather.message || hourlyWeather.message;
+    error.textContent = weather.message;
   }
 };
 
@@ -163,4 +157,4 @@ form.addEventListener("submit", (e) => {
   setWeather(search.value);
 });
 
-setWeather("baldwin park", "ca");
+setWeather("baldwin park");
