@@ -52,6 +52,12 @@ const makeCurrentCard = (name, state, current, daily) => {
   `;
 };
 
+const removeAllChildNodes = (parent) => {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+};
+
 const getTime = (unixTime, timezone) => {
   const msTime = unixTime * 1000;
   const date = new Date(msTime);
@@ -118,9 +124,12 @@ const makeHourlyCard = (hourly, timezone) => {
 
 const setWeather = async (location) => {
   const results = document.querySelector(".results");
+  const hourlyDiv = document.querySelector(".three-hourly-temps");
   const error = document.querySelector(".error");
 
   const weather = await getWeather(location);
+
+  removeAllChildNodes(hourlyDiv);
 
   if (!weather.message) {
     const { name, state, current, daily, hourly, timezone } = weather;
