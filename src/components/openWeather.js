@@ -1,26 +1,27 @@
 import WEATHER_API from "../../secret";
+import getGeocode from "./nominatim";
 
-const getWeather = async (city) => {
+const getWeather = async (city, unit = "imperial") => {
   try {
-    const geoRes = await fetch(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${WEATHER_API}`
+    const geocode = await getGeocode(city);
+    if (geocode.cod !== 200) {
+      return geocode;
+    }
+    const { lat, lon, name } = geocode;
+
+    const weatherRes = await fetch(
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=${WEATHER_API}&units=${unit}`
     );
-    const geocode = await geoRes.json();
-
-    if (geocode.length !== 0) {
-      // on success
-      const { lat, lon, name, state } = geocode[0];
-      const weatherRes = await fetch(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=${WEATHER_API}&units=imperial`
-      );
-      const data = await weatherRes.json();
-      const { current, daily, hourly, timezone } = data;
-
-      return { name, state, current, daily, hourly, timezone };
+    const data = await weatherRes.json();
+    if (data.cod === 429) {
+      return {
+        message: "Too many requests. Please try again at another time.",
+      };
     }
 
-    const message = "City not found";
-    return { message };
+    const { current, daily, hourly, timezone } = data;
+
+    return { name, current, daily, hourly, timezone };
   } catch (error) {
     return console.log(error);
   }
