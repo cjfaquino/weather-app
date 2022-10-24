@@ -13,6 +13,7 @@
   display: none;
 }
 
+/* header */
 header {
   padding: 30px;
   background-color: #343a40;
@@ -43,4 +44,20 @@ button {
   background-color: #eb6f4c;
   border-top-right-radius: var(--input-border-radius);
   border-bottom-right-radius: var(--input-border-radius);
+}
+
+/* hourly */
+.hourly-temps {
+  padding: 20px 0;
+  width: 100%;
+  overflow: scroll;
+  display: grid;
+  grid-template-columns: repeat(24, 100px);
+}
+
+.card-hourly {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
