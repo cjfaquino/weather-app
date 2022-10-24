@@ -9,7 +9,7 @@ const makeDailyCard = (daily) => {
     pop,
   } = daily;
 
-  const rainPerc = pop * 100;
+  const rainPerc = Math.round(pop * 100);
   const day = getDay(time);
   const dailyTemps = document.querySelector(".daily-temps");
   const card = document.createElement("div");

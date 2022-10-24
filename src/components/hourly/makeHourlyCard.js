@@ -12,7 +12,7 @@ const makeHourlyCard = (hourly, timezone) => {
   const splitTime = newTime.split(" ");
   const hour = splitTime[0].split(":")[0];
   const period = splitTime[1];
-  const rainPerc = pop * 100;
+  const rainPerc = Math.round(pop * 100);
 
   const hourlyTemps = document.querySelector(".hourly-temps");
   const card = document.createElement("div");
