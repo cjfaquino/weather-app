@@ -48,9 +48,21 @@ button {
   border-bottom-left-radius: var(--input-border-radius);
 }
 
+#search:focus {
+  box-shadow: 0 0 3pt 2pt rgb(235, 111, 76);
+  border-top-left-radius: var(--input-border-radius);
+  border-bottom-left-radius: var(--input-border-radius);
+}
+
 button {
   color: white;
-  background-color: #eb6f4c;
+  font-weight: 700;
+  background-color: rgb(235, 111, 76);
   border-top-right-radius: var(--input-border-radius);
   border-bottom-right-radius: var(--input-border-radius);
+}
+
+button:hover {
+  filter: saturate(.6);
+  cursor: pointer;
 }
