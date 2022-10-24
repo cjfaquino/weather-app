@@ -5,14 +5,12 @@ const makeHeader = () => {
   const header = document.createElement("header");
 
   header.innerHTML = `
-  <header>
     <form>
       <label for="search"
         ><input type="text" name="search" id="search"
       /></label>
       <button type="submit">Search</button>
     </form>
-  </header>
   `;
 
   return header;
@@ -22,14 +20,14 @@ const makeMain = () => {
   const main = document.createElement("main");
 
   main.innerHTML = `
-  <div class="results hide">
+  <div class="results">
     <div class="current-temps"></div>
     <div class="other"></div>
     <div class="hourly-temps"></div>
     <div class="daily-temps"></div>
   </div>
   
-  <div class="error hide"></div>
+  <div class="error"></div>
   `;
 
   return main;
@@ -68,7 +66,7 @@ const roundTemps = () => {
   });
 };
 
-const makeCurrentCard = (name, state, current, daily, timezone) => {
+const makeCurrentCard = (name, current, daily, timezone) => {
   const {
     temp,
     dt: time,
@@ -85,14 +83,13 @@ const makeCurrentCard = (name, state, current, daily, timezone) => {
 
   const currentTemps = document.querySelector(".current-temps");
   currentTemps.innerHTML = `
-  <div class="city-name">${name}, ${state}</div>
-  <div class="current-time">Currently ${currentTime}</div>
-  <div class="current-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
-  <div class="current-conditions">${condition}</div>
-  <div class="current-temp"><span class="number-temp">${temp}</span>°</div>
+  <div class="city-name">${name}</div>
+  <div class="current-time"><span class="current-conditions">${condition}</span> ${currentTime}</div>
+  <div class="current-temp"><span class="current-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></span> <span class="number-temp">${temp}</span>°</div>
+  
   <div class="current-hi-lo">
-    <div class="low-temp">L:<span class="low-temp"><span class="number-temp">${min}</span>°</span></div>
-    <div class="high-temp">H:<span class="high-temp"><span class="number-temp">${max}</span>°</span></div>
+    <span class="low-temp">L:<span class="low-temp"><span class="number-temp">${min}</span>°</span></span>
+    <span class="high-temp">H:<span class="high-temp"><span class="number-temp">${max}</span>°</span></span>
   </div>
   `;
 };
@@ -110,7 +107,6 @@ const makeOtherCard = (current, timezone) => {
     uvi,
   } = current;
 
-  const miVisibility = (visibility / 1609).toFixed(2);
   const hgPressure = (pressure * 0.029529983071445).toFixed(2);
   const sunriseTime = getTime(sunrise, timezone);
   const sunsetTime = getTime(sunset, timezone);
@@ -121,13 +117,13 @@ const makeOtherCard = (current, timezone) => {
   <div class="humidity">Humidity <span>${humidity}%</span></div>
   <div class="uvi">UV Index <span>${uvi}</span></div>
   <div class="cloudiness">Cloudiness <span>${cloudiness}%</span></div>
-  <div class="cloudiness">Visibility <span>${miVisibility}</span><span class="distance">mi</span></div>
+  <div class="cloudiness">Visibility <span><span class="number-distance">${visibility}</span> <span class="unit-distance">m</span></span></div>
   <div class="pressure">Pressure <span>${hgPressure} inHg</span></div>
-  <div class="speed">Wind speed <span>${speed} mph</span></div>
-  <div class="rise-set">
-    <div class="sunrise">Sunrise <span>${sunriseTime}</span></div>
-    <div class="sunset">Sunset <span>${sunsetTime}</span></div>
-  </div>
+  <div class="speed">Wind speed <span><span class="number-speed">${speed}</span> <span class="unit-speed">m/s</span></span></span></div>
+  <div class="sunrise">Sunrise <span>${sunriseTime}</span></div>
+  <div class="sunset">Sunset <span>${sunsetTime}</span></div>
+  <div class="precipitation">Precipitation <span>.55 <span>mm</span></span></div>
+
   `;
 };
 
@@ -178,7 +174,7 @@ const makeDailyCard = (daily) => {
   card.innerHTML = `
   <div class="weekday">${day}</div>
   <div class="daily-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
-  <div class="daily-temp"><span class="daily-hi"><span class="number-temp">${max}</span>°</span> <span class="daily-lo"><span     class="number-temp">${min}</span>°</span></div>
+  <div class="daily-temp"><span class="daily-lo"><span class="number-temp">${min}</span>°</span> <span class="daily-hi"><span class="number-temp">${max}</span>°</span></div>
   <div class="daily-rain">${rainPerc}%</div>
   <div class="daily-humidity">${humidity}%</div>
   `;
@@ -187,7 +183,6 @@ const makeDailyCard = (daily) => {
 };
 
 const setWeather = async (location) => {
-  const results = document.querySelector(".results");
   const hourlyTemps = document.querySelector(".hourly-temps");
   const dailyTemps = document.querySelector(".daily-temps");
   const error = document.querySelector(".error");
@@ -197,30 +192,28 @@ const setWeather = async (location) => {
   removeAllChildNodes(hourlyTemps);
   removeAllChildNodes(dailyTemps);
 
-  if (!weather.message) {
-    const { name, state, current, daily, hourly, timezone } = weather;
-    results.classList.remove("hide");
+  const { name, current, daily, hourly, timezone } = weather;
 
-    // current conditons
-    makeCurrentCard(name, state, current, daily, timezone);
+  // current conditons
+  makeCurrentCard(name, current, daily, timezone);
 
-    // other data
-    makeOtherCard(current, timezone);
+  // other data
+  makeOtherCard(current, timezone);
 
-    // hourly conditions
-    for (let i = 0; i < 24; i++) {
-      const element = hourly[i];
-      makeHourlyCard(element, timezone);
-    }
+  // hourly conditions
+  for (let i = 0; i < 24; i++) {
+    const element = hourly[i];
+    makeHourlyCard(element, timezone);
+  }
 
-    // daily conditions
-    daily.forEach((day) => {
-      makeDailyCard(day, timezone);
-    });
+  // daily conditions
+  daily.forEach((day) => {
+    makeDailyCard(day, timezone);
+  });
 
-    roundTemps();
-  } else {
-    error.classList.remove("hide");
+  roundTemps();
+
+  if (weather.message) {
     error.textContent = weather.message;
   }
 };
@@ -229,13 +222,9 @@ document.body.append(makeHeader(), makeMain());
 
 const form = document.querySelector("form");
 const search = document.getElementById("search");
-const results = document.querySelector(".results");
-const error = document.querySelector(".error");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  results.classList.add("hide");
-  error.classList.add("hide");
   setWeather(search.value);
 });
 
