@@ -15,4 +15,10 @@
 
 .hourly-rain {
   color: rgb(0, 123, 255);
+  font-size: .7rem;
+}
+
+.period {
+  color: grey;
+  font-size: .6rem;
 }
