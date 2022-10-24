@@ -1,3 +1,8 @@
+@import './components/current/current.css';
+@import './components/daily/daily.css';
+@import './components/hourly/hourly.css';
+@import './components/other/other.css';
+
 :root {
   --input-border-radius: 5px
 }
@@ -48,94 +53,4 @@ button {
   background-color: #eb6f4c;
   border-top-right-radius: var(--input-border-radius);
   border-bottom-right-radius: var(--input-border-radius);
-}
-
-/* hourly */
-.hourly-temps {
-  padding: 20px 0;
-  width: 100%;
-  overflow: scroll;
-  display: grid;
-  grid-template-columns: repeat(24, 1fr);
-}
-
-.card-hourly {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.hourly-rain {
-  color: rgb(0, 123, 255);
-}
-
-/* daily */
-.daily-temps {
-  padding: 20px;
-}
-
-.daily-temps img {
-  height: 75px;
-}
-
-.daily-conditions {
-  display: flex;
-  justify-content: center;
-}
-
-.daily-temps>.card-hourly {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-}
-
-.daily-temp,
-.daily-rain,
-.daily-humidity {
-  text-align: right;
-}
-
-/* current */
-
-.current-temps {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.current-temps img {
-  height: 100px;
-}
-
-.city-name {
-  font-size: 1.6rem;
-}
-
-.current-conditions {
-  font-size: 1.3rem;
-}
-
-.current-temp {
-  font-size: 5rem;
-}
-
-/* other */
-.other {
-  padding: 40px 20px;
-  background-color: #343a40;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 1fr 1fr;
-  justify-content: center;
-  text-align: center;
-}
-
-.other>* {
-  display: grid;
-  grid-template-rows: 25px;
-  color: grey;
-}
-
-.other span {
-  color: white;
 }

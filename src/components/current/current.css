@@ -1,0 +1,21 @@
+.current-temps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.current-temps img {
+  height: 100px;
+}
+
+.city-name {
+  font-size: 1.6rem;
+}
+
+.current-conditions {
+  font-size: 1.3rem;
+}
+
+.current-temp {
+  font-size: 5rem;
+}

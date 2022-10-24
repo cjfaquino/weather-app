@@ -1,0 +1,23 @@
+.daily-temps {
+  padding: 20px;
+}
+
+.daily-temps img {
+  height: 75px;
+}
+
+.daily-conditions {
+  display: flex;
+  justify-content: center;
+}
+
+.daily-temps>.card-hourly {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.daily-temp,
+.daily-rain,
+.daily-humidity {
+  text-align: right;
+}
