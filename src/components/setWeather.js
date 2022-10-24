@@ -33,6 +33,7 @@ const setWeather = async (location) => {
 
   // daily conditions
   makeDailyHeadings();
+  daily.shift();
   daily.forEach((day) => {
     makeDailyCard(day, timezone);
   });
