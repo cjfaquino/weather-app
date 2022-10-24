@@ -1,9 +1,46 @@
+:root {
+  --input-border-radius: 5px
+}
+
 * {
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 
 .hide {
   display: none;
+}
+
+header {
+  padding: 30px;
+  background-color: #343a40;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+}
+
+#search,
+button {
+  height: 35px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+}
+
+#search {
+  width: 100%;
+  padding: 0 10px;
+  border-top-left-radius: var(--input-border-radius);
+  border-bottom-left-radius: var(--input-border-radius);
+}
+
+button {
+  color: white;
+  background-color: #eb6f4c;
+  border-top-right-radius: var(--input-border-radius);
+  border-bottom-right-radius: var(--input-border-radius);
 }
