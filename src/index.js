@@ -1,5 +1,5 @@
 import "./style.css";
-import makeHeader from "./components/makeHeader";
+import makeHeader from "./components/header/makeHeader";
 import makeMain from "./components/makeMain";
 import setWeather from "./components/setWeather";
 

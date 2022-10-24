@@ -1,3 +1,4 @@
+@import './components/header/header.css';
 @import './components/current/current.css';
 @import './components/daily/daily.css';
 @import './components/hourly/hourly.css';
@@ -20,49 +21,4 @@
 
 img {
   height: 50px;
-}
-
-/* header */
-header {
-  padding: 30px;
-  background-color: #343a40;
-}
-
-form {
-  display: grid;
-  grid-template-columns: 1fr 100px;
-}
-
-#search,
-button {
-  height: 35px;
-  font-size: 1rem;
-  border: none;
-  outline: none;
-}
-
-#search {
-  width: 100%;
-  padding: 0 10px;
-  border-top-left-radius: var(--input-border-radius);
-  border-bottom-left-radius: var(--input-border-radius);
-}
-
-#search:focus {
-  box-shadow: 0 0 3pt 2pt rgb(235, 111, 76);
-  border-top-left-radius: var(--input-border-radius);
-  border-bottom-left-radius: var(--input-border-radius);
-}
-
-button {
-  color: white;
-  font-weight: 700;
-  background-color: rgb(235, 111, 76);
-  border-top-right-radius: var(--input-border-radius);
-  border-bottom-right-radius: var(--input-border-radius);
-}
-
-button:hover {
-  filter: saturate(.6);
-  cursor: pointer;
 }
