@@ -11,13 +11,18 @@
   justify-content: center;
 }
 
-.daily-temps>.card-hourly {
+.daily-temps>.card-daily {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  align-items: center;
 }
 
 .daily-temp,
 .daily-rain,
 .daily-humidity {
   text-align: right;
+}
+
+.daily-lo {
+  color: rgb(158, 158, 158);
 }

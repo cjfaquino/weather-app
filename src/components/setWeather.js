@@ -5,6 +5,7 @@ import makeHourlyCard from "./hourly/makeHourlyCard";
 import makeDailyCard from "./daily/makeDailyCard";
 import removeAllChildNodes from "./removeAllChildNodes";
 import roundTemps from "./roundTemps";
+import makeDailyHeadings from "./daily/makeDailyHeadings";
 
 const setWeather = async (location) => {
   const hourlyTemps = document.querySelector(".hourly-temps");
@@ -31,6 +32,7 @@ const setWeather = async (location) => {
   }
 
   // daily conditions
+  makeDailyHeadings();
   daily.forEach((day) => {
     makeDailyCard(day, timezone);
   });

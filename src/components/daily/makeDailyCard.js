@@ -14,7 +14,7 @@ const makeDailyCard = (daily) => {
   const dailyTemps = document.querySelector(".daily-temps");
   const card = document.createElement("div");
 
-  card.classList.add("card-hourly");
+  card.classList.add("card-daily");
   card.innerHTML = `
   <div class="weekday">${day}</div>
   <div class="daily-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
