@@ -2,6 +2,11 @@
   padding: 20px;
 }
 
+.daily-headings.card-daily {
+  color: rgb(235, 111, 76);
+  font-size: 1.1rem;
+}
+
 .daily-temps img {
   height: 75px;
 }
@@ -11,10 +16,14 @@
   justify-content: center;
 }
 
-.daily-temps>.card-daily {
+.card-daily {
+  padding: 0 40px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 75px;
   align-items: center;
+  border-bottom: 1px solid grey;
+  font-size: .9rem;
 }
 
 .daily-temp,

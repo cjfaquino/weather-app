@@ -3,7 +3,7 @@ const makeDailyHeadings = () => {
 
   const headings = document.createElement("div");
 
-  headings.classList.add("card-headings");
+  headings.classList.add("daily-headings");
   headings.classList.add("card-daily");
   headings.innerHTML = `
   <div class="weekday">Day</div>
