@@ -7,7 +7,11 @@ const makeHeader = () => {
   header.innerHTML = `
     <form>
       <label for="search"
-        ><input type="text" name="search" id="search"
+        ><input 
+        type="text" 
+        name="search" 
+        id="search"
+        placeholder="Enter a city"
       /></label>
       <button type="submit">Search</button>
     </form>
