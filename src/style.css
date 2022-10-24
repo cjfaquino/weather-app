@@ -124,7 +124,7 @@ button {
   padding: 40px 20px;
   background-color: #343a40;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 1fr 1fr;
   justify-content: center;
   text-align: center;
