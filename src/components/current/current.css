@@ -16,9 +16,17 @@
   font-size: 1.3rem;
 }
 
+.current-time {
+  color: grey;
+}
+
 .current-temp {
   font-size: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.low-temp {
+  color: grey;
 }

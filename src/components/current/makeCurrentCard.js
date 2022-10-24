@@ -18,7 +18,7 @@ const makeCurrentCard = (name, current, daily, timezone) => {
   const currentTemps = document.querySelector(".current-temps");
   currentTemps.innerHTML = `
   <div class="city-name">${name}</div>
-  <div class="current-time"><span class="current-conditions">${condition}</span> ${currentTime}</div>
+  <div><span class="current-conditions">${condition}</span> <span class="current-time">${currentTime}</span></div>
   <div class="current-temp"><span class="current-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></span> <span class="number-temp">${temp}</span>°</div>
   
   <div class="current-hi-lo">
