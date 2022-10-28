@@ -7,6 +7,7 @@
 :root {
   --input-border-radius: 5px;
   --subtext-color: rgb(157, 157, 157);
+  --theme-color: rgb(235, 111, 76)
 }
 
 * {
@@ -17,7 +18,7 @@
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .wrapper {
@@ -49,4 +50,36 @@ img {
   font-weight: 700;
   border: 2px solid red;
   border-radius: var(--input-border-radius);
+}
+
+.loading-screen {
+  position: absolute;
+  top: 0px;
+  background-color: rgba(255, 255, 255, 0.408);
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  /* background */
+  border: 16px solid rgb(243, 243, 243);
+  /* fordground */
+  border-top: 16px solid var(--theme-color);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

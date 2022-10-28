@@ -2,6 +2,9 @@ const makeMain = () => {
   const main = document.createElement("main");
 
   main.innerHTML = `
+  <div class="loading-screen">
+    <div class="loader"></div>
+  </div>
   <div class="results">
     <div class="error wrapper"></div>
     <div class="top-half wrapper">
