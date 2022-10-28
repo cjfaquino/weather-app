@@ -1,5 +1,5 @@
 .daily-headings.card-daily {
-  color: rgb(235, 111, 76);
+  color: var(--theme-color);
   font-size: 1.1rem;
 }
 

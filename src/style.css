@@ -7,7 +7,7 @@
 :root {
   --input-border-radius: 5px;
   --subtext-color: rgb(157, 157, 157);
-  --theme-color: rgb(235, 111, 76)
+  --theme-color: rgb(235, 111, 76);
 }
 
 * {
