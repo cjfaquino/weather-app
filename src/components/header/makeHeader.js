@@ -2,7 +2,7 @@ const makeHeader = () => {
   const header = document.createElement("header");
 
   header.innerHTML = `
-    <form>
+    <form class="wrapper">
       <label for="search"
         ><input 
         type="text" 

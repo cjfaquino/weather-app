@@ -19,11 +19,22 @@
   display: none;
 }
 
+.wrapper {
+  padding: 0 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
 img {
   height: 50px;
 }
 
 .top-half {
   display: flex;
-  padding: 0 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.results {
+  padding-bottom: 20px;
 }

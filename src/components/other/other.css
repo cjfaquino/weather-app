@@ -1,6 +1,8 @@
 .other {
-  padding: 30px 20px;
   background-color: #343a40;
+}
+
+.other>.wrapper {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 70px);
@@ -9,7 +11,7 @@
   text-align: center;
 }
 
-.other>* {
+.other>.wrapper>* {
   display: grid;
   grid-template-rows: 20px;
 }

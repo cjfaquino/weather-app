@@ -5,7 +5,7 @@
 }
 
 .current-temps img {
-  height: 100px;
+  height: 75px;
 }
 
 .city-name {
@@ -21,7 +21,7 @@
 }
 
 .current-temp {
-  font-size: 5rem;
+  font-size: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;

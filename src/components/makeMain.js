@@ -3,12 +3,12 @@ const makeMain = () => {
 
   main.innerHTML = `
   <div class="results">
-    <div class="top-half">
+    <div class="top-half wrapper">
       <div class="current-temps"></div>
       <div class="hourly-temps"></div>
       </div>
     <div class="other"></div>
-    <div class="daily-temps"></div>
+    <div class="daily-temps wrapper"></div>
   </div>
   
   <div class="error"></div>
