@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 70px);
+  grid-auto-rows: 70px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -25,4 +26,20 @@
   text-transform: uppercase;
   color: grey !important;
   font-size: .7rem !important;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .other>.wrapper {
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+
+  .other span {
+    font-size: 1rem;
+  }
+
+  .other {
+    order: 5;
+  }
 }

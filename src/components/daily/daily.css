@@ -31,3 +31,18 @@
 .daily-lo {
   color: rgb(158, 158, 158);
 }
+
+@media only screen and (max-width: 600px) {
+
+  .daily-headings.card-daily {
+    font-size: .8rem !important;
+  }
+
+  .weekday {
+    font-size: .6rem;
+  }
+
+  .card-daily {
+    padding: 0;
+  }
+}
