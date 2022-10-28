@@ -22,3 +22,8 @@
 img {
   height: 50px;
 }
+
+.top-half {
+  display: flex;
+  padding: 0 20px;
+}

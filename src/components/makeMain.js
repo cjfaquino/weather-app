@@ -3,9 +3,11 @@ const makeMain = () => {
 
   main.innerHTML = `
   <div class="results">
-    <div class="current-temps"></div>
+    <div class="top-half">
+      <div class="current-temps"></div>
+      <div class="hourly-temps"></div>
+      </div>
     <div class="other"></div>
-    <div class="hourly-temps"></div>
     <div class="daily-temps"></div>
   </div>
   
