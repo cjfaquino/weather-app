@@ -28,7 +28,7 @@
 }
 
 .low-temp {
-  color: grey;
+  color: var(--subtext-color);
 }
 
 @media only screen and (max-width: 600px) {

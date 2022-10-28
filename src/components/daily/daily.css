@@ -29,7 +29,7 @@
 }
 
 .daily-lo {
-  color: rgb(158, 158, 158);
+  color: var(--subtext-color);
 }
 
 @media only screen and (max-width: 600px) {

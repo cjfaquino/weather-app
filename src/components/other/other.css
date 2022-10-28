@@ -24,7 +24,7 @@
 
 .other-label {
   text-transform: uppercase;
-  color: grey !important;
+  color: var(--subtext-color) !important;
   font-size: .7rem !important;
 }
 

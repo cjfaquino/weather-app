@@ -5,7 +5,8 @@
 @import './components/other/other.css';
 
 :root {
-  --input-border-radius: 5px
+  --input-border-radius: 5px;
+  --subtext-color: rgb(157, 157, 157);
 }
 
 * {
