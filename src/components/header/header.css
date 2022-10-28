@@ -1,11 +1,11 @@
 header {
   padding: 20px 0;
-  background-color: #343a40;
+  background-color: rgb(52, 58, 64);
 }
 
 form {
   display: grid;
-  grid-template-columns: 1fr 100px;
+  grid-template-columns: 1fr 100px 100px;
 }
 
 #search,
@@ -31,6 +31,10 @@ button {
 
 button {
   color: white;
+}
+
+button[type="submit"] {
+  width: 80px;
   font-weight: 700;
   background-color: rgb(235, 111, 76);
   border-top-right-radius: var(--input-border-radius);
@@ -40,4 +44,10 @@ button {
 button:hover {
   filter: saturate(.6);
   cursor: pointer;
+}
+
+button.toggle-units {
+  border-radius: var(--input-border-radius);
+  background-color: rgb(52, 58, 64);
+  border: 2px solid rgb(235, 111, 76);
 }

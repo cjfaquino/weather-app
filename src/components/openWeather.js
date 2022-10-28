@@ -1,7 +1,7 @@
 import WEATHER_API from "../../secret";
 import getGeocode from "./nominatim";
 
-const getWeather = async (city, unit = "imperial") => {
+const getWeather = async (city, unit) => {
   try {
     const geocode = await getGeocode(city);
     if (geocode.cod !== 200) {

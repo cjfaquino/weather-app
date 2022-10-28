@@ -6,13 +6,14 @@ import makeDailyCard from "./daily/makeDailyCard";
 import removeAllChildNodes from "./removeAllChildNodes";
 import roundTemps from "./roundTemps";
 import makeDailyHeadings from "./daily/makeDailyHeadings";
+import { setCurrentLocation } from "./currentLocation";
 
-const setWeather = async (location) => {
+const setWeather = async (location, unit = "imperial") => {
   const hourlyTemps = document.querySelector(".hourly-temps");
   const dailyTemps = document.querySelector(".daily-temps");
   const error = document.querySelector(".error");
 
-  const weather = await getWeather(location);
+  const weather = await getWeather(location, unit);
   if (weather.message) {
     error.classList.add("active");
     error.textContent = weather.message;
@@ -25,6 +26,7 @@ const setWeather = async (location) => {
   removeAllChildNodes(dailyTemps);
 
   const { name, current, daily, hourly, minutely, timezone } = weather;
+  setCurrentLocation(name);
 
   // current conditons
   makeCurrentCard(name, current, daily, timezone);
