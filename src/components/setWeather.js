@@ -13,6 +13,13 @@ const setWeather = async (location) => {
   const error = document.querySelector(".error");
 
   const weather = await getWeather(location);
+  if (weather.message) {
+    error.classList.add("active");
+    error.textContent = weather.message;
+    return;
+  }
+  error.textContent = "";
+  error.classList.remove("active");
 
   removeAllChildNodes(hourlyTemps);
   removeAllChildNodes(dailyTemps);
@@ -38,10 +45,6 @@ const setWeather = async (location) => {
   });
 
   roundTemps();
-
-  if (weather.message) {
-    error.textContent = weather.message;
-  }
 };
 
 export default setWeather;

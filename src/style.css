@@ -39,3 +39,14 @@ img {
 .results {
   padding-bottom: 20px;
 }
+
+.error.active {
+  margin-top: 20px;
+  padding: 10px;
+  width: 90%;
+  text-align: center;
+  color: red;
+  font-weight: 700;
+  border: 2px solid red;
+  border-radius: var(--input-border-radius);
+}

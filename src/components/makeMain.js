@@ -3,6 +3,7 @@ const makeMain = () => {
 
   main.innerHTML = `
   <div class="results">
+    <div class="error wrapper"></div>
     <div class="top-half wrapper">
       <div class="current-temps"></div>
       <div class="hourly-temps"></div>
@@ -11,7 +12,6 @@ const makeMain = () => {
     <div class="daily-temps wrapper"></div>
   </div>
   
-  <div class="error"></div>
   `;
 
   return main;

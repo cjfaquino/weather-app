@@ -14,9 +14,8 @@ const getWeather = async (city, unit = "imperial") => {
     );
     const data = await weatherRes.json();
     if (data.cod) {
-      return {
-        message: "Too many requests. Please try again at another time.",
-      };
+      const { message } = data;
+      return { message };
     }
 
     const { current, daily, hourly, minutely, timezone } = data;
