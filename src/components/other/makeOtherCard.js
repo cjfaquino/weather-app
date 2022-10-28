@@ -1,6 +1,6 @@
 import { getTime } from "../formatTime";
 
-const makeOtherCard = (current, timezone) => {
+const makeOtherCard = (current, minutely, timezone) => {
   const {
     wind_speed: speed,
     feels_like: feelsLike,
@@ -12,6 +12,7 @@ const makeOtherCard = (current, timezone) => {
     sunset,
     uvi,
   } = current;
+  const [{ precipitation }] = minutely;
 
   const hgPressure = (pressure * 0.029529983071445).toFixed(2);
   const sunriseTime = getTime(sunrise, timezone);
@@ -28,8 +29,7 @@ const makeOtherCard = (current, timezone) => {
   <div class="speed">Wind speed <span><span class="number-speed">${speed}</span> <span class="unit-speed">m/s</span></span></span></div>
   <div class="sunrise">Sunrise <span>${sunriseTime}</span></div>
   <div class="sunset">Sunset <span>${sunsetTime}</span></div>
-  <div class="precipitation">Precipitation <span>.55 <span>mm</span></span></div>
-
+  <div class="precipitation">Precipitation <span>${precipitation}<span> mm</span></span></div>
   `;
 };
 

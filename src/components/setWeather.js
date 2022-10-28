@@ -17,13 +17,13 @@ const setWeather = async (location) => {
   removeAllChildNodes(hourlyTemps);
   removeAllChildNodes(dailyTemps);
 
-  const { name, current, daily, hourly, timezone } = weather;
+  const { name, current, daily, hourly, minutely, timezone } = weather;
 
   // current conditons
   makeCurrentCard(name, current, daily, timezone);
 
   // other data
-  makeOtherCard(current, timezone);
+  makeOtherCard(current, minutely, timezone);
 
   // hourly conditions
   for (let i = 0; i < 24; i++) {
