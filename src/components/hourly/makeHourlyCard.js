@@ -20,9 +20,9 @@ const makeHourlyCard = (hourly, timezone) => {
   card.classList.add("card-hourly");
   card.innerHTML = `
   <div class="hourly-time">${hour}<span class="period">${period}</span></div>
-  <div class="hourly-rain">${rainPerc}%</div>
   <div class="hourly-conditions"><img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}"/></div>
   <div class="hourly-temp"><span class="number-temp">${temp}</span>°</div>
+  <div class="hourly-rain">${rainPerc}%</div>
   `;
 
   hourlyTemps.append(card);
