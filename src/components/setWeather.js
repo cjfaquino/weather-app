@@ -26,10 +26,9 @@ const setWeather = async (location) => {
   makeOtherCard(current, minutely, timezone);
 
   // hourly conditions
-  for (let i = 0; i < 24; i++) {
-    const element = hourly[i];
-    makeHourlyCard(element, timezone);
-  }
+  hourly.forEach((hour) => {
+    makeHourlyCard(hour, timezone);
+  });
 
   // daily conditions
   makeDailyHeadings();
