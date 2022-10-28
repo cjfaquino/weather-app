@@ -32,7 +32,7 @@ const setWeather = async (location, unit = "imperial") => {
   makeCurrentCard(name, current, daily, timezone);
 
   // other data
-  makeOtherCard(current, minutely, timezone);
+  makeOtherCard(current, minutely, timezone, unit);
 
   // hourly conditions
   hourly.forEach((hour) => {

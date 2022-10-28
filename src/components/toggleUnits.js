@@ -3,14 +3,20 @@ import setWeather from "./setWeather";
 
 let unit = "imperial";
 
-const toggleUnits = () => {
+const changeWindSpeed = (str) => {
+  const unitSpeed = document.querySelector(".unit-speed");
+  unitSpeed.textContent = str;
+};
+
+const toggleUnits = async () => {
   const currentLocation = getCurrentLocation();
   if (unit === "imperial") {
-    setWeather(currentLocation, "metric");
-    console.log(currentLocation);
+    await setWeather(currentLocation, "metric");
+    changeWindSpeed("m/s");
     unit = "metric";
   } else {
-    setWeather(currentLocation, "imperial");
+    await setWeather(currentLocation, "imperial");
+    changeWindSpeed("mph");
     unit = "imperial";
   }
 };

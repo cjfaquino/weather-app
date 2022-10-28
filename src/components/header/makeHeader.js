@@ -11,7 +11,7 @@ const makeHeader = () => {
         placeholder="Enter a city"
       /></label>
       <button type="submit">Search</button>
-      <button type="button" class="toggle-units">°C/°F</button>
+      <button type="button" class="toggle-units">Metric: °C, meters/ Imperial: °F, miles</button>
     </form>
   `;
 
