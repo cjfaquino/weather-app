@@ -1,4 +1,3 @@
-import WEATHER_API from "../../secret";
 import getGeocode from "./nominatim";
 
 const getWeather = async (city, unit) => {
@@ -13,7 +12,7 @@ const getWeather = async (city, unit) => {
     const { lat, lon, name } = geocode;
 
     const weatherRes = await fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API}&units=${unit}`
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API}&units=${unit}`
     );
     const data = await weatherRes.json();
     loading.classList.add("hide");
