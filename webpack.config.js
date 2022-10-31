@@ -1,31 +1,23 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  mode: "development",
-  entry: "./src/index.js",
-  devtool: "inline-source-map",
-  devServer: {
-    static: "./dist",
+  entry: {
+    index: "./src/index.js",
   },
-
   output: {
-    filename: "main.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-    ],
+    clean: true,
   },
   plugins: [
-    new Dotenv(),
     new HtmlWebpackPlugin({
+      hash: true,
       title: "Weather App",
+      metaDesc: "Weather app based on OpenWeather API",
+      template: "./src/index.html",
+      filename: "index.html",
+      inject: "body",
     }),
   ],
 };
