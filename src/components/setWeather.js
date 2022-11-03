@@ -1,4 +1,4 @@
-import getWeather from "./openWeather";
+import getCityWeather from "./getWeather";
 import makeCurrentCard from "./current/makeCurrentCard";
 import makeOtherCard from "./other/makeOtherCard";
 import makeHourlyCard from "./hourly/makeHourlyCard";
@@ -13,7 +13,7 @@ const setWeather = async (location, unit = "imperial") => {
   const dailyTemps = document.querySelector(".daily-temps");
   const error = document.querySelector(".error");
 
-  const weather = await getWeather(location, unit);
+  const weather = await getCityWeather(location, unit);
   if (weather.message) {
     error.classList.add("active");
     error.textContent = weather.message;
