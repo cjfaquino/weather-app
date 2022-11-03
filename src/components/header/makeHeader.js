@@ -3,6 +3,7 @@ const makeHeader = () => {
 
   header.innerHTML = `
     <form class="wrapper">
+      <button type="button" class="geolocation"><i class="fa-solid fa-location-crosshairs"></i></button>
       <label for="search"
         ><input 
         type="text" 
@@ -12,7 +13,7 @@ const makeHeader = () => {
       /></label>
       <button type="submit">Search</button>
       <button type="button" class="toggle-units">Metric: °C, meters/ Imperial: °F, miles</button>
-      <button type="button" class="geolocation">G</button>
+      
     </form>
   `;
 
