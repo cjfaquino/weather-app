@@ -1,5 +1,5 @@
 import { getCurrentLocation } from "./currentLocation";
-import setWeather from "./setWeather";
+import { setSearchedWeather } from "./setWeather";
 
 let unit = "imperial";
 
@@ -11,11 +11,11 @@ const changeWindSpeed = (str) => {
 const toggleUnits = async () => {
   const currentLocation = getCurrentLocation();
   if (unit === "imperial") {
-    await setWeather(currentLocation, "metric");
+    await setSearchedWeather(currentLocation, "metric");
     changeWindSpeed("m/s");
     unit = "metric";
   } else {
-    await setWeather(currentLocation, "imperial");
+    await setSearchedWeather(currentLocation, "imperial");
     changeWindSpeed("mph");
     unit = "imperial";
   }

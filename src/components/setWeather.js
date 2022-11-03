@@ -1,4 +1,4 @@
-import getCityWeather from "./getWeather";
+import { getCityWeather, getCurrentLocationWeather } from "./getWeather";
 import makeCurrentCard from "./current/makeCurrentCard";
 import makeOtherCard from "./other/makeOtherCard";
 import makeHourlyCard from "./hourly/makeHourlyCard";
@@ -8,12 +8,13 @@ import roundTemps from "./roundTemps";
 import makeDailyHeadings from "./daily/makeDailyHeadings";
 import { setCurrentLocation } from "./currentLocation";
 
-const setWeather = async (location, unit = "imperial") => {
+const setWeather = async (data, unit) => {
   const hourlyTemps = document.querySelector(".hourly-temps");
   const dailyTemps = document.querySelector(".daily-temps");
   const error = document.querySelector(".error");
 
-  const weather = await getCityWeather(location, unit);
+  const weather = await data;
+
   if (weather.message) {
     error.classList.add("active");
     error.textContent = weather.message;
@@ -49,4 +50,12 @@ const setWeather = async (location, unit = "imperial") => {
   roundTemps();
 };
 
-export default setWeather;
+export const setCurrentLocationWeather = async () => {
+  const weather = await getCurrentLocationWeather();
+  setWeather(weather, "imperial");
+};
+
+export const setSearchedWeather = async (location, unit = "imperial") => {
+  const weather = await getCityWeather(location, unit);
+  setWeather(weather, unit);
+};

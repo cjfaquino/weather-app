@@ -12,6 +12,7 @@ const makeHeader = () => {
       /></label>
       <button type="submit">Search</button>
       <button type="button" class="toggle-units">Metric: °C, meters/ Imperial: °F, miles</button>
+      <button type="button" class="geolocation">G</button>
     </form>
   `;
 

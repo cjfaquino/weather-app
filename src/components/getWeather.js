@@ -1,7 +1,7 @@
 import getGeocode from "./nominatim";
-import openWeather from "./openWeather";
+import { openWeather, getCityName } from "./openWeather";
 
-const getCityWeather = async (city, unit) => {
+export const getCityWeather = async (city, unit = "imperial") => {
   const loading = document.querySelector(".loading-screen");
   loading.classList.remove("hide");
 
@@ -15,11 +15,10 @@ const getCityWeather = async (city, unit) => {
     const { lat, lon, name } = geocode;
 
     // then get weather data from open weather
-    const weatherData = await openWeather(lat, lon, name, unit);
+    const weatherData = await openWeather(lat, lon, unit);
     loading.classList.add("hide");
     if (weatherData.cod) {
-      const { message } = weatherData;
-      return { message }; // get Open Weather error messages
+      return weatherData; // get Open Weather error messages
     }
     const { current, daily, hourly, minutely, timezone } = weatherData;
 
@@ -29,4 +28,34 @@ const getCityWeather = async (city, unit) => {
   }
 };
 
-export default getCityWeather;
+export const getCurrentLocationWeather = async () => {
+  const loading = document.querySelector(".loading-screen");
+
+  const getPosition = async () =>
+    new Promise((res, rej) => {
+      navigator.geolocation.getCurrentPosition(res, rej, {
+        timeout: 5000,
+      });
+    });
+
+  try {
+    const position = await getPosition();
+    const { latitude: lat, longitude: lon } = position.coords;
+
+    loading.classList.remove("hide");
+    const city = await getCityName(lat, lon);
+    const [{ name }] = city;
+
+    // then get weather data from open weather
+    const weatherData = await openWeather(lat, lon);
+    loading.classList.add("hide");
+    if (weatherData.cod) {
+      return weatherData; // get Open Weather error messages
+    }
+    const { current, daily, hourly, minutely, timezone } = weatherData;
+
+    return { name, current, daily, hourly, minutely, timezone };
+  } catch (error) {
+    return error;
+  }
+};
