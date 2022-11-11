@@ -1,15 +1,12 @@
 # weather-app
 
-![screenshot](./screenshot.png)
-![mobile](./screenshot-Mobile.png)
-
 ## Features
 
 - Using the native browser geolocation API for current location
 - Open Weather reverse geolocation API to get city name for native browser geolocation
 - Nominatim geolocation for unlimited API calls for input searches
-- Get current, minutely, hourly, daily, timezone data from Open Weather onecall API
-- Toggle betwen imperial and metric units
+- Get current, minutely, hourly, daily, timezone data from Open Weather one-call API
+- Toggle between imperial and metric units
 - Responsive design, mobile ready
 - Displays error for city not found and blocked requests
 - Logs any other errors
@@ -43,3 +40,8 @@ Opens a new tab with live reload
 ```sh
 npm run dev
 ```
+
+## Example images
+
+![screenshot](./screenshot.png)
+![mobile](./screenshot-Mobile.png)
