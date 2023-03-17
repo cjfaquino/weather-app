@@ -1,1 +1,10 @@
-WEATHER_API = YOUR_API_HERE 
+# openweather
+WEATHER_API = <string>
+
+# firebase
+FB_API_KEY= <string>
+FB_AUTH_DOMAIN= <string>
+FB_PROJECT_ID= <string>
+FB_STORAGE_BUCKET= <string>
+FB_MESSAGE_SENDER_ID= <string>
+FB_APP_ID= <string>
